@@ -1,18 +1,6 @@
-import reactLogo from "./assets/react.svg";
-import { Navbar } from "./components/navbar";
-
-function App() {
-  return (
-    <>
-      <Navbar />
-      Projets
-      <ul>
-        <a href="/projects/ultimate-powerbank/">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </ul>
-    </>
-  );
+// Render childrens
+function App({ children }: { children: React.ReactNode }) {
+  return <div className="w-full h-full flex flex-col bg-green-200">{children}</div>;
 }
 
 export default App;
