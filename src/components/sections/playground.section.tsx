@@ -1,5 +1,7 @@
-import Section from "./section";
+import { PowerbankProject } from "../projects/powerbank.project";
+import { Project, ThumbnailTemplate } from "../projects/project";
 import { HeroParallax } from "../ui/hero-parallax";
+import Section from "./section";
 
 export const products = [
   {
@@ -8,6 +10,7 @@ export const products = [
     thumbnail:
       "https://aceternity.com/images/products/thumbnails/new/moonbeam.png",
   },
+  new PowerbankProject(),
   {
     title: "Cursor",
     link: "https://cursor.so",
@@ -20,7 +23,6 @@ export const products = [
     thumbnail:
       "https://aceternity.com/images/products/thumbnails/new/rogue.png",
   },
-
   {
     title: "Editorially",
     link: "https://editorially.org",
@@ -99,8 +101,32 @@ export const products = [
 
 function PlaygroundSection() {
   return (
-    <Section id="playground" className="bg-[#f7f5fb] dark:bg-[#080a04] h-auto pb-0">
-      <HeroParallax products={products} />
+    <Section
+      id="playground"
+      className="bg-[#f7f5fb] dark:bg-[#080a04] h-auto pb-0"
+    >
+      <HeroParallax>
+        {products.map((product, index) => {
+          const isProject = product instanceof Project;
+
+          if (isProject) {
+            return <product.thumbnail key={index} />;
+          }
+
+          return (
+            <ThumbnailTemplate
+              key={index}
+              product={
+                product as {
+                  title: string;
+                  link: string;
+                  thumbnail: string;
+                }
+              }
+            />
+          );
+        })}
+      </HeroParallax>
     </Section>
   );
 }

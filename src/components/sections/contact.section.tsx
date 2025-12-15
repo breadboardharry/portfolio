@@ -160,7 +160,7 @@ function ContactSection() {
         <p className="text-center">Antoine Leroux - 2025</p>
       </div>
 
-      <BackgroundBeams />
+      {/* <BackgroundBeams /> */}
     </Section>
   );
 }
