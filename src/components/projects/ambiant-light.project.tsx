@@ -1,9 +1,9 @@
 "use client";
 import { Project } from "./project";
 
-export class PowerbankProject extends Project {
-  public readonly title = "Ultimate Powerbank";
-  public readonly dates = { from: 2019, to: 2021 };
+export class AmbiantLightProject extends Project {
+  public readonly title = "Ambiant Light";
+  public readonly dates = { from: 2021 };
   public readonly status = "completed";
   public readonly tags = ["electronic", "3d-printing"];
   public readonly coverImageURL =
@@ -11,11 +11,7 @@ export class PowerbankProject extends Project {
   public readonly thumbnailImageURL =
     "assets/images/projects/powerbank/thumbnail.jpg";
   public readonly links = [
-    { type: "instagram", url: "https://www.instagram.com/p/C20GFcPrTCB" },
-    {
-      type: "github",
-      url: "https://github.com/breadboardharry/ultimate-power-bank",
-    },
+    { type: "instagram", url: "https://www.instagram.com/p/CTahwG5DT5b" },
   ];
   public readonly markdownContent = `
 ## Hi, *Pluto*!
