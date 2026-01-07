@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
 import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from "lucide-react";
 import { motion } from "motion/react";
+import { useRef } from "react";
 import { Dock, DockIcon } from "../ui/dock";
 import { LayoutTextFlip } from "../ui/layout-text-flip";
 import {
@@ -11,7 +15,6 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import Section from "./section";
-import { BackgroundBeams } from "../ui/background-beams";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -91,10 +94,47 @@ const DATA = {
 };
 
 function ContactSection() {
+  const down = "M0-0.3C0-0.3,464,156,1139,156S2278-0.3,2278-0.3V683H0V-0.3z";
+  const center = "M0-0.3C0-0.3,464,0,1139,0s1139-0.3,1139-0.3V683H0V-0.3z";
+
+  const footerRef = useRef(null);
+  const pathRef = useRef(null);
+
+  useGSAP(
+    () => {
+      // gsap code here...
+      // gsap.to(".box", { rotation: 180 }); // <-- automatically reverted
+
+      ScrollTrigger.create({
+        trigger: footerRef.current,
+        start: "top bottom",
+        toggleActions: "play pause resume reverse",
+        onEnter: (self) => {
+          const velocity = self.getVelocity();
+          const variation = velocity / 10000;
+
+          gsap.fromTo(
+            pathRef.current,
+            {
+              morphSVG: down,
+            },
+            {
+              duration: 2,
+              morphSVG: center,
+              ease: `elastic.out(${1 + variation}, ${1 - variation})`,
+              overwrite: true,
+            }
+          );
+        },
+      });
+    },
+    { scope: footerRef }
+  );
+
   return (
     <Section
       id="contact"
-      className="relative bg-[#f7f5fb] dark:bg-[#080a04] flex flex-col"
+      className="relative bg-[#f7f5fb] dark:bg-[#080a04] min-h-dvh flex flex-col pb-0"
     >
       <div className="z-10 flex-1 flex flex-col items-center justify-center">
         <motion.div className="relative mx-4 mb-14 flex flex-col items-center justify-center gap-4 text-center sm:mx-0 sm:flex-row">
@@ -153,14 +193,42 @@ function ContactSection() {
         </TooltipProvider>
       </div>
 
-      <div className="mb-8 space-y-1">
-        <p className="text-center text-muted-foreground">
-          Thanks for visiting my portfolio!
-        </p>
-        <p className="text-center">Antoine Leroux - 2025</p>
-      </div>
+      <div className="w-full" ref={footerRef}>
+        <div className="absolute left-1/2 -translate-x-1/2 bottom-4 space-y-1">
+          <p className="text-center text-muted text-sm">
+            Thanks for visiting my portfolio!
+          </p>
+          <p className="text-center text-white font-medium">
+            Antoine Leroux - 2025
+          </p>
+        </div>
 
-      {/* <BackgroundBeams /> */}
+        <svg
+          preserveAspectRatio="none"
+          className="w-full block overflow-visible h-[20vh]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 2278 683"
+        >
+          <defs>
+            <linearGradient
+              id="grad-1"
+              x1="0"
+              y1="0"
+              x2="2278"
+              y2="683"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop offset="0.2" stopColor="#fec5fb"></stop>
+              <stop offset="0.8" stopColor="#00bae2"></stop>
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#grad-1)"
+            d="M0-0.3C0-0.3,464,156,1139,156S2278-0.3,2278-0.3V683H0V-0.3z"
+            ref={pathRef}
+          />
+        </svg>
+      </div>
     </Section>
   );
 }

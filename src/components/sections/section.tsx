@@ -10,7 +10,7 @@ function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn("h-dvh py-8 shrink-0", className)}>
+    <section id={id} className={cn("relative overflow-hidden", className)}>
       {children}
     </section>
   );

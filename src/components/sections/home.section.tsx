@@ -4,7 +4,7 @@ import Section from "./section";
 
 function HomeSection() {
   return (
-    <Section>
+    <Section className="h-dvh">
       <LightRays />
 
       <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 size-96 flex items-center justify-center">

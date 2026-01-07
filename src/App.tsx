@@ -1,45 +1,55 @@
-import { motion } from "motion/react";
-import { Navbar } from "./components/navbar";
+import { useRef } from "react";
 import AboutSection from "./components/sections/about.section";
 import ContactSection from "./components/sections/contact.section";
-import HomeSection from "./components/sections/home.section";
 // import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { MorphSVGPlugin, ScrollSmoother, ScrollTrigger } from "gsap/all";
+import HomeSection from "./components/sections/home.section";
 import PlaygroundSection from "./components/sections/playground.section";
-import { Pointer } from "@/components/ui/pointer";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, MorphSVGPlugin);
 
 // Render childrens
 function App() {
-  // useEffect(() => {
-  //   const lenis = new Lenis({
-  //     duration: 2,
-  //     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  //     smoothWheel: true,
-  //   });
+  const scrollWrapperRef = useRef(null);
 
-  //   function raf(time: number) {
-  //     lenis.raf(time);
-  //     requestAnimationFrame(raf);
-  //   }
+  useGSAP(
+    () => {
 
-  //   requestAnimationFrame(raf);
 
-  //   return () => lenis.destroy();
-  // }, []);
+      ScrollSmoother.create({
+        smooth: 1.5,
+        effects: true,
+        normalizeScroll: true,
+      });
+    },
+
+    { scope: scrollWrapperRef }
+  );
 
   return (
     <div
-      className="w-full h-full flex flex-col
-    relative before:absolute before:top-0 before:left-0 before:w-full
-     before:h-full before:content-[''] before:opacity-[0.05] before:z-10 before:pointer-events-none
-     before:bg-[url('https://www.ui-layouts.com/noise.gif')]"
+      ref={scrollWrapperRef}
+      id="smooth-wrapper"
+      // className="!cursor-none"
+      // className="w-full h-full relative"
     >
-      <Pointer />
+      <div
+        id="smooth-content"
+        //     className="w-full h-full overflow-visible
+        //  relative before:absolute before:top-0 before:left-0 before:w-full
+        //  before:h-full before:content-[''] before:opacity-[0.05] before:z-10 before:pointer-events-none
+        //  before:bg-[url('https://www.ui-layouts.com/noise.gif')]"
+      >
+        {/* <div className="flair flair--3 size-4 fixed top-0 left-0 z-50 rounded-full bg-gray-400 pointer-events-none"></div> */}
 
-      <Navbar />
-      <HomeSection />
-      <AboutSection />
-      <PlaygroundSection />
-      <ContactSection />
+        {/* <Navbar /> */}
+        <HomeSection />
+        <AboutSection />
+        <PlaygroundSection />
+        <ContactSection />
+      </div>
     </div>
   );
 }
