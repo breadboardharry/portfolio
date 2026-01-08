@@ -1,56 +1,90 @@
-import { useRef } from "react";
-import AboutSection from "./components/sections/about.section";
-import ContactSection from "./components/sections/contact.section";
-// import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { MorphSVGPlugin, ScrollSmoother, ScrollTrigger } from "gsap/all";
+import { MorphSVGPlugin, ScrollTrigger } from "gsap/all";
+import { ReactLenis } from "lenis/react";
+import { useRef } from "react";
+import { Header } from "./components/sections/header";
+import Footer from "./components/sections/footer.section";
 import HomeSection from "./components/sections/home.section";
 import PlaygroundSection from "./components/sections/playground.section";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, MorphSVGPlugin);
+gsap.registerPlugin(useGSAP, ScrollTrigger, MorphSVGPlugin);
 
 // Render childrens
 function App() {
-  const scrollWrapperRef = useRef(null);
+  const lenisRef = useRef(null);
 
-  useGSAP(
-    () => {
+  useGSAP(() => {
+    const panels = gsap.utils.toArray<HTMLElement>("section");
+    panels.pop();
 
+    panels.forEach((panel) => {
+      // Get the element holding the content inside the panel
+      const innerpanel = panel.querySelector<HTMLElement>(".section-inner");
+      if (!innerpanel) return;
 
-      ScrollSmoother.create({
-        smooth: 1.5,
-        effects: true,
-        normalizeScroll: true,
+      // Get the Height of the content inside the panel
+      const panelHeight = innerpanel.offsetHeight;
+
+      // Get the window height
+      const windowHeight = window.innerHeight;
+
+      const difference = panelHeight - windowHeight;
+
+      // ratio (between 0 and 1) representing the portion of the overall animation that's for the fake-scrolling. We know that the scale & fade should happen over the course of 1 windowHeight, so we can figure out the ratio based on how far we must fake-scroll
+      const fakeScrollRatio =
+        difference > 0 ? difference / (difference + windowHeight) : 0;
+
+      // if we need to fake scroll (because the panel is taller than the window), add the appropriate amount of margin to the bottom so that the next element comes in at the proper time.
+      if (fakeScrollRatio) {
+        panel.style.marginBottom = panelHeight * fakeScrollRatio + "px";
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: panel,
+          start: "bottom bottom",
+          end: () =>
+            fakeScrollRatio ? `+=${innerpanel.offsetHeight}` : "bottom top",
+          pinSpacing: false,
+          pin: true,
+          scrub: true,
+        },
       });
-    },
 
-    { scope: scrollWrapperRef }
-  );
+      // fake scroll. We use 1 because that's what the rest of the timeline consists of (0.9 scale + 0.1 fade)
+      if (fakeScrollRatio) {
+        tl.to(innerpanel, {
+          yPercent: -100,
+          y: window.innerHeight,
+          duration: 1 / (1 - fakeScrollRatio) - 1,
+          ease: "none",
+        });
+      }
+      tl.fromTo(
+        panel,
+        { scale: 1, opacity: 1 },
+        { scale: 0.7, opacity: 0.5, duration: 0.9 }
+      ).to(panel, { opacity: 0, duration: 0.1 });
+    });
+  });
 
   return (
-    <div
-      ref={scrollWrapperRef}
-      id="smooth-wrapper"
-      // className="!cursor-none"
-      // className="w-full h-full relative"
-    >
-      <div
-        id="smooth-content"
-        //     className="w-full h-full overflow-visible
-        //  relative before:absolute before:top-0 before:left-0 before:w-full
-        //  before:h-full before:content-[''] before:opacity-[0.05] before:z-10 before:pointer-events-none
-        //  before:bg-[url('https://www.ui-layouts.com/noise.gif')]"
-      >
-        {/* <div className="flair flair--3 size-4 fixed top-0 left-0 z-50 rounded-full bg-gray-400 pointer-events-none"></div> */}
+    <>
+      <ReactLenis root ref={lenisRef} />
 
-        {/* <Navbar /> */}
-        <HomeSection />
-        <AboutSection />
-        <PlaygroundSection />
-        <ContactSection />
+      <Header className="fixed top-0 z-30" />
+
+      <div className="relative bg-black w-full h-min z-10">
+        <HomeSection className="bg-black" />
       </div>
-    </div>
+      <PlaygroundSection className="z-10" />
+
+      {/* FOOTER-LOCKER */}
+      <div className="h-dvh w-full pointer-events-none"></div>
+
+      <Footer className="fixed bottom-0 z-0" />
+    </>
   );
 }
 

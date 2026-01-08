@@ -52,3 +52,10 @@ export default tseslint.config({
   },
 })
 ```
+
+# TODO
+
+Catching phrases :
+- Driven by Passion, built with code
+- Handcrafted digital solutions
+- innovative self-made creations

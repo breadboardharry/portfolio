@@ -10,7 +10,7 @@ function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn("relative overflow-hidden", className)}>
+    <section id={id} className={cn("section relative overflow-hidden", className)}>
       {children}
     </section>
   );

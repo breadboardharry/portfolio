@@ -43,9 +43,11 @@ export abstract class Project {
 export function ProjectThumbnail({
   project,
   translate,
+  className
 }: {
   project: Project;
   translate?: MotionValue<number>;
+  className?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -73,6 +75,7 @@ export function ProjectThumbnail({
       }}
       title={project.title}
       thumbnail={project.thumbnailImageURL}
+      className={className}
     >
       {popoverPage}
     </ThumbnailTemplate>
@@ -96,7 +99,7 @@ export function ThumbnailFrame({
         x: translate,
       }}
       className={cn(
-        "group h-[25rem] w-[40rem] relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
+        "group aspect-video relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
         // light styles
         "bg-background [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
         // dark styles

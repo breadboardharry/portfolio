@@ -1,11 +1,11 @@
 "use client";
-import { Project } from "./project";
+import { LinkType, Project, TagType } from "./project";
 
 export class PowerbankProject extends Project {
   public readonly title = "Ultimate Powerbank";
   public readonly dates = { from: 2019, to: 2021 };
   public readonly status = "completed";
-  public readonly tags = ["electronic", "3d-printing"];
+  public readonly tags = ["electronic", "3d-printing"] as TagType[];
   public readonly coverImageURL =
     "assets/images/projects/powerbank/thumbnail.jpg";
   public readonly thumbnailImageURL =
@@ -16,7 +16,7 @@ export class PowerbankProject extends Project {
       type: "github",
       url: "https://github.com/breadboardharry/ultimate-power-bank",
     },
-  ];
+  ] as { type: LinkType; url: string }[];
   public readonly markdownContent = `
 ## Hi, *Pluto*!
 

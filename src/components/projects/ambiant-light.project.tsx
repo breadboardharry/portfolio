@@ -1,18 +1,18 @@
 "use client";
-import { Project } from "./project";
+import { LinkType, Project, TagType } from "./project";
 
 export class AmbiantLightProject extends Project {
   public readonly title = "Ambiant Light";
   public readonly dates = { from: 2021 };
   public readonly status = "completed";
-  public readonly tags = ["electronic", "3d-printing"];
+  public readonly tags = ["electronic", "3d-printing"] as TagType[];
   public readonly coverImageURL =
     "assets/images/projects/powerbank/thumbnail.jpg";
   public readonly thumbnailImageURL =
     "assets/images/projects/powerbank/thumbnail.jpg";
   public readonly links = [
     { type: "instagram", url: "https://www.instagram.com/p/CTahwG5DT5b" },
-  ];
+  ] as { type: LinkType; url: string }[];
   public readonly markdownContent = `
 ## Hi, *Pluto*!
 
