@@ -7,6 +7,7 @@ import { Header } from "./components/sections/header";
 import Footer from "./components/sections/footer.section";
 import HomeSection from "./components/sections/home.section";
 import PlaygroundSection from "./components/sections/playground.section";
+import { Cursor } from "./components/cursor/cursor";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, MorphSVGPlugin);
 
@@ -73,7 +74,9 @@ function App() {
     <>
       <ReactLenis root ref={lenisRef} />
 
-      <Header className="fixed top-0 z-30" />
+      <Header className="fixed top-0 z-30 abcd" />
+
+      <Cursor />
 
       <div className="relative bg-black w-full h-min z-10">
         <HomeSection className="bg-black" />

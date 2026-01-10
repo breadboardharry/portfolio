@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+* {
+  cursor: none !important;
+}
+
 html.lenis,
 html.lenis body {
   height: auto;

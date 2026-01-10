@@ -38,6 +38,7 @@ export function Header({ className }: { className?: string }) {
           Antoine Leroux
         </p>
       </a>
+      <button className="see-more">ssszsazsda</button>
 
       <ul className="flex gap-3">
         <li>
@@ -55,7 +56,6 @@ export function Header({ className }: { className?: string }) {
           </Button>
         </li>
         <li>
-          {" "}
           <Button variant="ghost" className="p-0 size-7" asChild>
             <a href={urls.linkedin} target="_blank" rel="noreferrer">
               <LinkedInLogoIcon className="text-white size-5" />
