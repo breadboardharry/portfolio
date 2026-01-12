@@ -1,6 +1,6 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ArrowUpRightIcon, EyeIcon } from "lucide-react";
+import { ArrowUpRightIcon } from "lucide-react";
 import { useRef } from "react";
 
 export function Cursor() {
@@ -11,10 +11,10 @@ export function Cursor() {
     gsap.set(".cursor", { xPercent: -50, yPercent: -50 });
 
     const xTo = gsap.quickTo(".cursor", "x", {
-        duration: 0.2,
-        ease: "elastic",
+        duration: 0.15,
+        ease: "expo",
       }),
-      yTo = gsap.quickTo(".cursor", "y", { duration: 0.2, ease: "elastic" });
+      yTo = gsap.quickTo(".cursor", "y", { duration: 0.15, ease: "expo" });
 
     window.addEventListener("mousemove", (e) => {
       xTo(e.clientX);

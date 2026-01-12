@@ -1,3 +1,7 @@
+export const firstname = "DDD";
+export const lastname = "AAAA";
+export const fullname = firstname + " " + lastname;
+
 export const urls = {
   github: "https://github.com/breadboardharry",
   instagram: "https://www.instagram.com/harryonbreadboard",

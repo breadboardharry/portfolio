@@ -14,7 +14,6 @@ import {
   CircuitBoardIcon,
   ExternalLinkIcon,
 } from "lucide-react";
-import { MotionValue, motion } from "motion/react";
 import { ReactNode, useState } from "react";
 import Markdown from "react-markdown";
 import { Badge } from "../ui/badge";
@@ -42,11 +41,9 @@ export abstract class Project {
 
 export function ProjectThumbnail({
   project,
-  translate,
-  className
+  className,
 }: {
   project: Project;
-  translate?: MotionValue<number>;
   className?: string;
 }) {
   const [open, setOpen] = useState(false);
@@ -69,7 +66,6 @@ export function ProjectThumbnail({
 
   return (
     <ThumbnailTemplate
-      translate={translate}
       onClick={() => {
         setOpen(true);
       }}
@@ -83,21 +79,16 @@ export function ProjectThumbnail({
 }
 
 export function ThumbnailFrame({
-  translate,
   children,
   className,
   onClick,
 }: {
-  translate?: MotionValue<number>;
   children: ReactNode;
   className?: string;
   onClick?: () => void;
 }) {
   return (
-    <motion.button
-      style={{
-        x: translate,
-      }}
+    <button
       className={cn(
         "group aspect-video relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
         // light styles
@@ -109,7 +100,7 @@ export function ThumbnailFrame({
       onClick={onClick}
     >
       {children}
-    </motion.button>
+    </button>
   );
 }
 
@@ -117,14 +108,12 @@ export function ThumbnailTemplate({
   title,
   thumbnail,
   className,
-  translate,
   onClick,
   children,
 }: {
   title: string;
   thumbnail: string;
   className?: string;
-  translate?: MotionValue<number>;
   onClick?: () => void;
   children: ReactNode;
 }) {
@@ -133,7 +122,6 @@ export function ThumbnailTemplate({
   return (
     <ThumbnailFrame
       key={title}
-      translate={translate}
       className={cn("bg-black", className)}
       onClick={onClick}
     >

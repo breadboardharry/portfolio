@@ -9,7 +9,7 @@ export function useIsTablet() {
   );
 
   useEffect(() => {
-    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
+    const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT + 1}px)`);
     const onChange = () => {
       setIsTablet(window.innerWidth < MOBILE_BREAKPOINT);
     };

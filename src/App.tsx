@@ -3,17 +3,21 @@ import gsap from "gsap";
 import { MorphSVGPlugin, ScrollTrigger } from "gsap/all";
 import { ReactLenis } from "lenis/react";
 import { useRef } from "react";
-import { Header } from "./components/sections/header";
+import { Cursor } from "./components/cursor/cursor";
 import Footer from "./components/sections/footer.section";
+import { Header } from "./components/sections/header";
 import HomeSection from "./components/sections/home.section";
 import PlaygroundSection from "./components/sections/playground.section";
-import { Cursor } from "./components/cursor/cursor";
+import { Toaster } from "./components/ui/sonner";
+import { useHasFinePointer } from "./hooks/use-fine-pointer";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, MorphSVGPlugin);
 
 // Render childrens
 function App() {
   const lenisRef = useRef(null);
+
+  const hasFinePointer = useHasFinePointer();
 
   useGSAP(() => {
     const panels = gsap.utils.toArray<HTMLElement>("section");
@@ -76,7 +80,10 @@ function App() {
 
       <Header className="fixed top-0 z-30 abcd" />
 
-      <Cursor />
+      {/* CUSTOM POINTER ON NON-TOUCHSCREENS DEVICES */}
+      {hasFinePointer && <Cursor />}
+
+      <Toaster />
 
       <div className="relative bg-black w-full h-min z-10">
         <HomeSection className="bg-black" />
