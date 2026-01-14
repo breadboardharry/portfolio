@@ -3,7 +3,8 @@ import gsap from "gsap";
 import { MorphSVGPlugin, ScrollTrigger } from "gsap/all";
 import { ReactLenis } from "lenis/react";
 import { useRef } from "react";
-import { Cursor } from "./components/cursor/cursor";
+import { Cursor } from "./components/common/cursor";
+import { GradientBackground } from "./components/common/gradient-background";
 import Footer from "./components/sections/footer.section";
 import { Header } from "./components/sections/header";
 import HomeSection from "./components/sections/home.section";
@@ -74,26 +75,43 @@ function App() {
     });
   });
 
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: "center center",
+      onEnter: () => {
+        gsap.to(".footer", {
+          zIndex: 10,
+        });
+      },
+      onLeaveBack: () => {
+        gsap.to(".footer", {
+          zIndex: 0,
+        });
+      },
+    });
+  });
+
   return (
     <>
       <ReactLenis root ref={lenisRef} />
 
-      <Header className="fixed top-0 z-30 abcd" />
+      <Header className="fixed top-0 z-40" />
 
       {/* CUSTOM POINTER ON NON-TOUCHSCREENS DEVICES */}
       {hasFinePointer && <Cursor />}
 
       <Toaster />
 
-      <div className="relative bg-black w-full h-min z-10">
-        <HomeSection className="bg-black" />
-      </div>
-      <PlaygroundSection className="z-10" />
+      <GradientBackground />
+
+      <HomeSection className="relative z-20" />
+      <PlaygroundSection className="relative z-20" />
 
       {/* FOOTER-LOCKER */}
       <div className="h-dvh w-full pointer-events-none"></div>
 
-      <Footer className="fixed bottom-0 z-0" />
+      <Footer className="footer fixed bottom-0 z-0" />
     </>
   );
 }

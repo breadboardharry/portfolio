@@ -6,15 +6,10 @@ import {
   LinkedInLogoIcon,
 } from "@radix-ui/react-icons";
 import { MailIcon, PhoneIcon } from "lucide-react";
-import { Button } from "../ui/button";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "sonner";
-import { useIsTablet } from "@/hooks/use-tablet";
+import { Button } from "../ui/button";
 
 function Footer({ className }: { className?: string }) {
-  const isMobile = useIsMobile();
-  const isTablet = useIsTablet();
-
   const copyToClipboard = (content: string, message?: string) => {
     navigator.clipboard.writeText(content);
     if (message) toast(message);

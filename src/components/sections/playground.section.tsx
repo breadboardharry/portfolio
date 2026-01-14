@@ -34,7 +34,7 @@ function PlaygroundSection({ className }: { className?: string }) {
   );
 
   return (
-    <Section id="playground" className={cn("min-h-dvh bg-black", className)}>
+    <Section id="playground" className={cn("min-h-dvh", className)}>
       <div className="bg-white flex flex-col items-center gap-16 rounded-4xl">
         <div className="flex flex-col items-center">
           <h2 className="text-5xl font-medium">My playground</h2>

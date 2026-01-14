@@ -2,12 +2,13 @@ import { fullname } from "@/data";
 import { cn } from "@/libs/style";
 import { ArrowDownIcon } from "lucide-react";
 import Section from "./section";
+import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 
 function HomeSection({ className }: { className?: string }) {
   return (
     <Section className={cn("h-dvh min-dvh", className)}>
       <div className="section-content h-full">
-        <div className="section-inner h-full flex flex-col items-center justify-center gap-2 lg:gap-0">
+        <div className="relative z-10 section-inner h-full flex flex-col items-center justify-center gap-2 lg:gap-0">
           <h1 className="whitespace-nowrap leading-none text-4xl md:text-[70px] lg:text-[100px] xl:text-[120px] opacity-80 font-medium">
             I TURN IDEAS
           </h1>
@@ -39,6 +40,19 @@ function HomeSection({ className }: { className?: string }) {
             </div>
           </div>
         </div>
+
+        
+
+        {/* <FlickeringGrid
+          className="absolute top-0 left-0 w-full h-full inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
+          squareSize={4}
+          gridGap={6}
+          color="#ffffff"
+          maxOpacity={0.5}
+          flickerChance={0.1}
+          height={1000}
+          width={1000}
+        /> */}
       </div>
     </Section>
   );
