@@ -1,8 +1,10 @@
+import { cn } from "@/libs/style";
 import { ShaderGradient, ShaderGradientCanvas } from "@shadergradient/react";
 
-export const GradientBackground = () => {
+export const GradientBackground = ({ className }: { className?: string }) => {
   return (
     <ShaderGradientCanvas
+      className={cn("", className)}
       style={{
         position: "fixed",
         top: 0,

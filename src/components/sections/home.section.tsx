@@ -1,10 +1,19 @@
 import { fullname } from "@/data";
 import { cn } from "@/libs/style";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { ArrowDownIcon } from "lucide-react";
 import Section from "./section";
-import { ShaderGradientCanvas, ShaderGradient } from "@shadergradient/react";
 
 function HomeSection({ className }: { className?: string }) {
+  useGSAP(() => {
+    gsap.from("#path", {
+      drawSVG: 0,
+      duration: 2,
+      ease: "power1.inOut",
+    });
+  });
+
   return (
     <Section className={cn("h-dvh min-dvh", className)}>
       <div className="section-content h-full">
@@ -40,8 +49,6 @@ function HomeSection({ className }: { className?: string }) {
             </div>
           </div>
         </div>
-
-        
 
         {/* <FlickeringGrid
           className="absolute top-0 left-0 w-full h-full inset-0 z-0 [mask-image:radial-gradient(450px_circle_at_center,white,transparent)]"
