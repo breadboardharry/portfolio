@@ -114,7 +114,7 @@ function App() {
       </div>
 
       {/* FOOTER-LOCKER */}
-      <div className="h-dvh w-full pointer-events-none"></div>
+      <div className="footer-locker h-dvh w-full pointer-events-none"></div>
       <Footer className="footer fixed bottom-0 z-0" />
     </>
   );

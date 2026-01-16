@@ -1,15 +1,72 @@
-import { email, fullname, phone, urls } from "@/data";
+import { email, phone, urls } from "@/data";
 import { cn } from "@/libs/style";
+import { useGSAP } from "@gsap/react";
 import {
   GitHubLogoIcon,
   InstagramLogoIcon,
   LinkedInLogoIcon,
 } from "@radix-ui/react-icons";
+import gsap from "gsap";
 import { MailIcon, PhoneIcon } from "lucide-react";
 import { toast } from "sonner";
+import { SigningSVG } from "../common/signing";
 import { Button } from "../ui/button";
+import { ScrollTrigger } from "gsap/all";
 
 function Footer({ className }: { className?: string }) {
+  useGSAP(() => {
+    ScrollTrigger.create({
+      trigger: ".footer-locker",
+      start: "top bottom",
+      end: "bottom top",
+      onEnter: () => {
+        gsap.fromTo(
+          "#signing-path1",
+          {
+            drawSVG: 0,
+            duration: 1.5,
+            ease: "power1.inOut",
+          },
+          {
+            drawSVG: "100%",
+            duration: 1.5,
+            ease: "power1.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          "#signing-path2",
+          {
+            drawSVG: 0,
+            duration: 1,
+            ease: "power1.inOut",
+          },
+          {
+            drawSVG: "100%",
+            duration: 1,
+            ease: "power1.inOut",
+          }
+        );
+
+        gsap.fromTo(
+          "#signing-path3",
+          {
+            drawSVG: 0,
+            duration: 0.5,
+            delay: 1,
+            ease: "power1.inOut",
+          },
+          {
+            drawSVG: "100%",
+            duration: 0.5,
+            delay: 1,
+            ease: "power1.inOut",
+          }
+        );
+      },
+    });
+  });
+
   const copyToClipboard = (content: string, message?: string) => {
     navigator.clipboard.writeText(content);
     if (message) toast(message);
@@ -29,12 +86,10 @@ function Footer({ className }: { className?: string }) {
 
         {/* INFOS */}
         <div className="absolute w-3/5 left-1/2 -translate-x-1/2 bottom-6 md:bottom-8 flex flex-col items-center xl:items-start xl:justify-between gap-8">
-          <div className="flex flex-col-reverse xl:flex-row justify-between gap-2">
+          <div className="flex flex-col-reverse xl:flex-row justify-between gap-2 xl:w-full">
             <div className="flex flex-col items-center xl:items-start gap-4 xl:gap-4 justify-between">
-              <div className="flex flex-col items-center md:items-center gap-3">
-                <p className="text-white text-sm md:text-lg xl:text-base font-medium">
-                  {fullname}
-                </p>
+              <div className="flex flex-col items-center md:items-center gap-3 xl:gap-0">
+                <SigningSVG className="w-40 md:w-40 xl:w-36 opacity-90" />
 
                 {/* Icon list */}
                 <div className="flex gap-2 xl:gap-2 -ml-1.5">
