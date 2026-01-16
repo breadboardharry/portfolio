@@ -23,7 +23,7 @@ function App() {
   useGSAP(() => {
     ScrollTrigger.normalizeScroll(true);
 
-    const panels = gsap.utils.toArray<HTMLElement>("section");
+    const panels = gsap.utils.toArray<HTMLElement>(".panel");
     panels.pop();
 
     panels.forEach((panel) => {
@@ -105,9 +105,14 @@ function App() {
       <Toaster />
 
       <GradientBackground className="gradient-background" />
-      <HomeSection className="relative z-20" />
-      <PlaygroundSection className="relative z-20" />
-      
+      <HomeSection className="panel relative z-20" />
+
+      <div className="panel relative z-20 overflow-hidden h-min">
+        <div className="bg-white min-h-dvh flex flex-col items-center gap-16 rounded-4xl">
+          <PlaygroundSection />
+        </div>
+      </div>
+
       {/* FOOTER-LOCKER */}
       <div className="h-dvh w-full pointer-events-none"></div>
       <Footer className="footer fixed bottom-0 z-0" />

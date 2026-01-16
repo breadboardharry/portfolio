@@ -17,7 +17,7 @@ function HomeSection({ className }: { className?: string }) {
   return (
     <Section className={cn("h-dvh min-dvh", className)}>
       <div className="section-content h-full">
-        <div className="relative z-10 section-inner h-full flex flex-col items-center justify-center gap-2 lg:gap-0">
+        <div className="section-inner relative z-10 h-full flex flex-col items-center justify-center gap-2 lg:gap-0">
           <h1 className="whitespace-nowrap leading-none text-4xl md:text-[70px] lg:text-[100px] xl:text-[120px] opacity-80 font-medium">
             I TURN IDEAS
           </h1>
