@@ -7,8 +7,6 @@ import { AmbiantLightProject } from "../projects/ambiant-light.project";
 import { PowerbankProject } from "../projects/powerbank.project";
 import { Project, ProjectThumbnail } from "../projects/project";
 import Section from "./section";
-import { Button } from "../ui/button";
-import { BinaryIcon, CircuitBoardIcon, FlaskConicalIcon } from "lucide-react";
 
 const projects: Project[] = [new AmbiantLightProject(), new PowerbankProject()];
 
@@ -46,11 +44,14 @@ function PlaygroundSection({ className }: { className?: string }) {
       //   });
       // });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
-    <Section id="playground" className={cn("", className)}>
+    <Section
+      id="playground"
+      className={cn("w-full px-12 flex flex-col items-center", className)}
+    >
       <div className="flex flex-col items-center">
         <h2 className="text-5xl font-medium text-black">My playground</h2>
         <p className="text-xl text-center text-muted-foreground mt-6 max-w-[600px]">
@@ -59,40 +60,43 @@ function PlaygroundSection({ className }: { className?: string }) {
         </p>
       </div>
 
-      <div className="flex flex-col items-center" ref={containerRef}>
-        <div className="project-navbar z-20">
-          <ul className="flex gap-2">
-            <li>
-              <Button>
-                <BinaryIcon />
-                Software
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <CircuitBoardIcon />
-                Hardware
-              </Button>
-            </li>
-            <li>
-              <Button>
-                <FlaskConicalIcon />
-                Others
-              </Button>
-            </li>
-          </ul>
+      <div className="min-h-dvh max-w-[1200px] w-full my-12 grid grid-cols-6 grid-rows-12 gap-4 text-black">
+        <div className="col-span-6 row-span-5 col-start-1 row-start-1">
+          <ProjectThumbnail
+            project={new PowerbankProject()}
+            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+          />
         </div>
-
-        {projects.map((product, index) => (
-          <div className="project p-8 flex gap-8" key={index}>
-            <ProjectThumbnail
-              key={index}
-              project={product as Project}
-              className="w-full aspect-video basis-1/3"
-            />
-            <p className="text-black">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, reprehenderit recusandae consequatur error tempora praesentium! Possimus doloremque voluptatum sequi quidem nostrum inventore ducimus similique excepturi pariatur dolor, repellat culpa ab.</p>
-          </div>
-        ))}
+        <div className="col-span-3 row-span-4 col-start-4 row-start-6">
+          <ProjectThumbnail
+            project={new AmbiantLightProject()}
+            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+          />
+        </div>
+        <div className="col-span-3 row-span-4 col-start-1 row-start-6">
+          <ProjectThumbnail
+            project={new PowerbankProject()}
+            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+          />
+        </div>
+        <div className="col-span-2 row-span-3 col-start-1 row-start-10">
+          <ProjectThumbnail
+            project={new AmbiantLightProject()}
+            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+          />
+        </div>
+        <div className="col-span-2 row-span-3 col-start-3 row-start-10">
+          <ProjectThumbnail
+            project={new PowerbankProject()}
+            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+          />
+        </div>
+        <div className="col-span-2 row-span-3 col-start-5 row-start-10">
+          <ProjectThumbnail
+            project={new AmbiantLightProject()}
+            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+          />
+        </div>
       </div>
     </Section>
   );

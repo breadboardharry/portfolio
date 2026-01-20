@@ -8,13 +8,15 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/libs/style";
+import { useGSAP } from "@gsap/react";
 import { GitHubLogoIcon, InstagramLogoIcon } from "@radix-ui/react-icons";
+import gsap, { SplitText } from "gsap/all";
 import {
   ArrowRightIcon,
   CircuitBoardIcon,
   ExternalLinkIcon,
 } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import Markdown from "react-markdown";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -78,32 +80,6 @@ export function ProjectThumbnail({
   );
 }
 
-export function ThumbnailFrame({
-  children,
-  className,
-  onClick,
-}: {
-  children: ReactNode;
-  className?: string;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      className={cn(
-        "group aspect-video relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-        // light styles
-        "bg-background [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)]",
-        // dark styles
-        "dark:bg-background transform-gpu dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)]",
-        className
-      )}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-}
-
 export function ThumbnailTemplate({
   title,
   thumbnail,
@@ -117,19 +93,65 @@ export function ThumbnailTemplate({
   onClick?: () => void;
   children: ReactNode;
 }) {
+  const ref = useRef<HTMLButtonElement>(null);
+  const titleAnimationRef = useRef<gsap.core.Timeline | null>(null);
   const cta = "View more";
 
+  useGSAP(
+    () => {
+      const title = ref.current?.querySelector(".title");
+      if (!title) return;
+      const split = SplitText.create(title, { type: "chars" });
+      console.log(split);
+
+      const tl = gsap.timeline({ paused: true });
+
+      tl.from(split.chars, {
+        yPercent: 50,
+        opacity: 0,
+        duration: 0.2,
+        ease: "power3.out",
+        stagger: 0.04,
+      });
+      tl.progress(1).pause();
+
+      titleAnimationRef.current = tl;
+
+      return () => {
+        tl.kill();
+        split.revert(); // très important
+      };
+    },
+    {
+      scope: ref,
+    },
+  );
+
+  const handleMouseEnter = () => {
+    titleAnimationRef.current?.restart();
+  };
+
+  const handleMouseLeave = () => {
+    titleAnimationRef.current?.pause(100);
+  };
+
   return (
-    <ThumbnailFrame
-      key={title}
-      className={cn("bg-black", className)}
+    <button
+      className={cn(
+        "see-more bg-black",
+        "group relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
+        className,
+      )}
       onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      ref={ref}
     >
       <img
         src={thumbnail}
         height="600"
         width="600"
-        className="object-cover object-left-top absolute h-full w-full inset-0 scale-110 translate-y-4 group-hover:opacity-80 group-hover:scale-100 transition duration-350"
+        className="object-cover object-left-top absolute h-full w-full inset-0 scale-110 translate-y-4 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition duration-350"
         alt={title}
       />
 
@@ -137,7 +159,7 @@ export function ThumbnailTemplate({
         {title}
       </h2> */}
 
-      <h2 className="absolute left-8 pt-6 z-10 leading-snug text-white font-medium text-5xl text-left break-words w-min opacity-80 group-hover:opacity-100 group-hover:text-6xl transition duration-350">
+      <h2 className="title absolute left-8 pt-6 z-10 leading-snug text-white font-medium text-6xl text-left uppercase">
         {title}
       </h2>
 
@@ -154,7 +176,7 @@ export function ThumbnailTemplate({
       </Button>
 
       {children}
-    </ThumbnailFrame>
+    </button>
   );
 }
 
@@ -326,7 +348,7 @@ export function PagePopoverTemplate({
               className={cn(
                 "absolute bottom-6 left-6",
                 "text-5xl text-white dark:text-black",
-                titleClassName
+                titleClassName,
               )}
             >
               {title}

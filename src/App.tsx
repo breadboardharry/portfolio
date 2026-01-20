@@ -108,7 +108,7 @@ function App() {
       <HomeSection className="panel relative z-20" />
 
       <div className="panel relative z-20 overflow-hidden h-min">
-        <div className="bg-white min-h-dvh flex flex-col items-center gap-16 rounded-4xl">
+        <div className="pacge content bg-white min-h-dvh flex flex-col items-center gap-16 rounded-4xl">
           <PlaygroundSection />
         </div>
       </div>
