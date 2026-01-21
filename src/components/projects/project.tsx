@@ -95,7 +95,8 @@ export function ThumbnailTemplate({
 }) {
   const ref = useRef<HTMLButtonElement>(null);
   const titleAnimationRef = useRef<gsap.core.Timeline | null>(null);
-  const cta = "View more";
+  const fromYear = 2020;
+  const toYear = 2022;
 
   useGSAP(
     () => {
@@ -124,7 +125,7 @@ export function ThumbnailTemplate({
     },
     {
       scope: ref,
-    },
+    }
   );
 
   const handleMouseEnter = () => {
@@ -138,9 +139,9 @@ export function ThumbnailTemplate({
   return (
     <button
       className={cn(
-        "see-more bg-black",
-        "group relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-        className,
+        "see-more trigger bg-black border-8 border-primary transition-colors",
+        "relative shrink-0 col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
+        className
       )}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
@@ -149,9 +150,7 @@ export function ThumbnailTemplate({
     >
       <img
         src={thumbnail}
-        height="600"
-        width="600"
-        className="object-cover object-left-top absolute h-full w-full inset-0 scale-110 translate-y-4 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition duration-350"
+        className="object-cover object-center absolute h-full w-full inset-0 scale-110 translate-y-4 group-hover:scale-100 transition duration-350"
         alt={title}
       />
 
@@ -159,11 +158,15 @@ export function ThumbnailTemplate({
         {title}
       </h2> */}
 
-      <h2 className="title absolute left-8 pt-6 z-10 leading-snug text-white font-medium text-6xl text-left uppercase">
+      <h2 className="title absolute left-8 pt-6 z-10 leading-snug font-medium text-6xl text-left uppercase line-clamp-2 text-white">
         {title}
       </h2>
 
-      <Button
+      <p className="absolute left-8 bottom-6 group-hover:text-white">
+        {fromYear + (toYear ? ` - ${toYear}` : "")}
+      </p>
+
+      {/* <Button
         variant="link"
         asChild
         size="sm"
@@ -173,7 +176,7 @@ export function ThumbnailTemplate({
           {cta}
           <ArrowRightIcon className="ms-2 h-4 w-4 rtl:rotate-180" />
         </a>
-      </Button>
+      </Button> */}
 
       {children}
     </button>
@@ -348,7 +351,7 @@ export function PagePopoverTemplate({
               className={cn(
                 "absolute bottom-6 left-6",
                 "text-5xl text-white dark:text-black",
-                titleClassName,
+                titleClassName
               )}
             >
               {title}

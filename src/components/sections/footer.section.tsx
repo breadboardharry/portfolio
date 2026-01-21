@@ -7,13 +7,16 @@ import {
   LinkedInLogoIcon,
 } from "@radix-ui/react-icons";
 import gsap from "gsap";
+import { ScrollTrigger, SplitText } from "gsap/all";
 import { MailIcon, PhoneIcon } from "lucide-react";
+import { useRef } from "react";
 import { toast } from "sonner";
 import { SigningSVG } from "../common/signing";
 import { Button } from "../ui/button";
-import { ScrollTrigger } from "gsap/all";
 
 function Footer({ className }: { className?: string }) {
+  const footerRef = useRef<HTMLDivElement>(null);
+
   useGSAP(() => {
     ScrollTrigger.create({
       trigger: ".footer-locker",
@@ -24,13 +27,13 @@ function Footer({ className }: { className?: string }) {
           "#signing-path1",
           {
             drawSVG: 0,
-            duration: 1.5,
-            ease: "power1.inOut",
+            duration: 0,
           },
           {
             drawSVG: "100%",
             duration: 1.5,
             ease: "power1.inOut",
+            delay: 1,
           }
         );
 
@@ -38,13 +41,13 @@ function Footer({ className }: { className?: string }) {
           "#signing-path2",
           {
             drawSVG: 0,
-            duration: 1,
-            ease: "power1.inOut",
+            duration: 0,
           },
           {
             drawSVG: "100%",
             duration: 1,
             ease: "power1.inOut",
+            delay: 1,
           }
         );
 
@@ -52,17 +55,47 @@ function Footer({ className }: { className?: string }) {
           "#signing-path3",
           {
             drawSVG: 0,
-            duration: 0.5,
-            delay: 1,
-            ease: "power1.inOut",
+            duration: 0,
           },
           {
             drawSVG: "100%",
             duration: 0.5,
-            delay: 1,
             ease: "power1.inOut",
+            delay: 2,
           }
         );
+      },
+    });
+  });
+
+  useGSAP(() => {
+    const titles = gsap.utils.toArray<HTMLTitleElement>(".footer-title");
+
+    ScrollTrigger.create({
+      trigger: ".footer-locker",
+      start: "top 60%",
+      end: "bottom top",
+      onEnter: () => {
+        console.log("ezad");
+        titles.forEach((title, index) => {
+          const split = SplitText.create(title, { type: "chars" });
+          gsap.fromTo(
+            split.chars,
+            {
+              yPercent: 50,
+              opacity: 0,
+              stagger: 0.04,
+            },
+            {
+              yPercent: 0,
+              opacity: 1,
+              duration: 0.4,
+              delay: 0.25 * (index + 1),
+              ease: "power3.out",
+              stagger: 0.04,
+            }
+          );
+        });
       },
     });
   });
@@ -73,13 +106,13 @@ function Footer({ className }: { className?: string }) {
   };
 
   return (
-    <footer className={cn("w-full h-dvh", className)}>
+    <footer className={cn("w-full h-dvh", className)} ref={footerRef}>
       <div className="w-full h-full relative">
         <div className="absolute top-9/20 lg:2/5 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 xl:gap-0">
-          <p className="text-5xl md:text-[100px] lg:text-[120px] xl:text-[160px] font-semibold whitespace-nowrap leading-none">
+          <p className="footer-title text-5xl md:text-[100px] lg:text-[120px] xl:text-[160px] font-semibold whitespace-nowrap leading-none">
             LET'S WORK
           </p>
-          <p className="text-5xl md:text-[100px] lg:text-[120px] xl:text-[160px] font-semibold whitespace-nowrap leading-none">
+          <p className="footer-title text-5xl md:text-[100px] lg:text-[120px] xl:text-[160px] font-semibold whitespace-nowrap leading-none">
             TOGETHER
           </p>
         </div>

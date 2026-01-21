@@ -50,7 +50,7 @@ function PlaygroundSection({ className }: { className?: string }) {
   return (
     <Section
       id="playground"
-      className={cn("w-full px-12 flex flex-col items-center", className)}
+      className={cn("bg-background w-full px-12 flex flex-col items-center", className)}
     >
       <div className="flex flex-col items-center">
         <h2 className="text-5xl font-medium text-black">My playground</h2>
@@ -64,37 +64,37 @@ function PlaygroundSection({ className }: { className?: string }) {
         <div className="col-span-6 row-span-5 col-start-1 row-start-1">
           <ProjectThumbnail
             project={new PowerbankProject()}
-            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+            className="size-full"
           />
         </div>
         <div className="col-span-3 row-span-4 col-start-4 row-start-6">
           <ProjectThumbnail
             project={new AmbiantLightProject()}
-            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+            className="size-full border-8 opacity-50 hover:opacity-100"
           />
         </div>
         <div className="col-span-3 row-span-4 col-start-1 row-start-6">
           <ProjectThumbnail
             project={new PowerbankProject()}
-            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+            className="size-full border-8 opacity-50 hover:opacity-100"
           />
         </div>
         <div className="col-span-2 row-span-3 col-start-1 row-start-10">
           <ProjectThumbnail
             project={new AmbiantLightProject()}
-            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+            className="size-full border-8 opacity-50 hover:opacity-100"
           />
         </div>
         <div className="col-span-2 row-span-3 col-start-3 row-start-10">
           <ProjectThumbnail
             project={new PowerbankProject()}
-            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+            className="size-full border-8 opacity-50 hover:opacity-100"
           />
         </div>
         <div className="col-span-2 row-span-3 col-start-5 row-start-10">
           <ProjectThumbnail
             project={new AmbiantLightProject()}
-            className="size-full border-8 opacity-50 hover:opacity-100 border-black"
+            className="size-full border-8 opacity-50 hover:opacity-100"
           />
         </div>
       </div>
